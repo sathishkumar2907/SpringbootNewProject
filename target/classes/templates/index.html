@@ -1,0 +1,188 @@
+<html  xmlns:th="http://www.thymeleaf.org">  
+    <head>  
+      <title>Index Page</title>  
+        
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+ <style type="text/css">
+  span.error{
+    color: red;
+    margin-left: 5px;
+  }
+</style> 
+<style>
+.hidden{
+display:none;
+}
+</style>
+  
+<script type="text/javascript">
+$(function() {
+   /*  Submit form using Ajax */
+   $('button[type=submit]').click(function(e) {
+   
+      //Prevent default submission of form
+      e.preventDefault();
+      
+      var name = $.trim($("#name").val());
+       if(name ==  "" || name == null || !name){
+    	  $("#name-error").removeClass("hidden").html("Enter name");
+    	  return false;
+      } 
+       
+       var email=$.trim($("#email").val());
+      if(email=="" || email== null || !email){
+    	  $("#email-error").removeClass("hidden").html("Enter Email");
+    	  return false;
+      }
+      //Remove all errors
+      $('input').next().remove();
+      
+      $.post({
+         url : '/save1',
+         data : $('form[name=employeeForm]').serialize(),
+         success : function(res) {
+       
+            if(res.validated){
+           
+            	//$('#resultContainer pre code').text("successfully updated");
+               $('#resultContainer').show();
+             
+               $('#info').html(res).fadeIn('slow');
+               $('#info').html("User has been added to the list successfully.");
+               $('#info').delay(5000).fadeOut('slow');
+               
+                   //window.location.href = 'http://localhost:8081/save';
+                 //window.location.href ="${pageContext.request.contextPath}/save";
+            }else{
+              //Set error messages
+               $.each(res.errorMessages,function(key,value){
+  	            $('input[name='+key+']').after('<span class="error">'+value+'</span>');
+              }); 
+            }
+         }
+      })
+   });
+});
+</script>
+
+  <!-- <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#submit").submit(function (event) {
+
+                //stop submit the form, we will post it manually.
+                event.preventDefault();
+
+                fire_ajax_submit();
+
+            });
+
+        });
+        
+       function fire_ajax_submit() {
+
+            var register = {}
+            register["firstname"] = $("#firstname").val();
+            register["email"] = $("#email").val();
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "saveemp",
+                data: JSON.stringify(register),
+                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function (res) {
+
+                	
+                	 if(res.validated){
+                         //Set response
+                         $('#resultContainer pre code').text(JSON.stringify(res.user));
+                         $('#resultContainer').show();
+                      
+                      }else{
+                        //Set error messages
+                        $.each(res.errorMessages,function(key,value){
+            	            $('input[name='+key+']').after('<span class="error">'+value+'</span>');
+                        });
+                      }
+                	
+                	
+                	var preStart = "<h4>Ajax Response data</h4><pre>";
+                	var preEnd =  "</pre>"
+                    var json1 = $.parseJSON(JSON.stringify(data.result));
+                        
+                	var json=JSON.stringify(data.result);
+                	
+                	
+                	$('#resultContainer').html(json);
+                	
+                	//if(json.msg=="success"){
+                		//var finalData = preStart+json.result[0]['name']+preEnd;
+                		//var finalData = preStart+json.msg+preEnd;
+                		//$('#feedback').html(finalData);
+                	 //}else{
+                		// $('#feedback').html(json.msg);
+                	 //}
+                   
+                	console.log(json);
+                   
+                  
+                    },
+                error: function (e) {
+
+                    var json = "<h4>Ajax Response error</h4><pre>"
+                        + e.responseText + "</pre>";
+                    $('#feedback').html(json.msg);
+
+                    console.log("ERROR : ", e);
+                    $("#btn-search").prop("disabled", false);
+
+                }
+            });
+
+        }
+    </script> -->
+    </head>  
+    <body>  
+ <form action="save" method="post" name="employeeForm">
+  <fieldset>
+  
+    <legend>Personal information:</legend>
+     name:<br></br>
+    <input type="text" name="name" id="name" placeholder="name"/> <span id="name-error" class="hidden btn-danger"></span> 
+    <br></br>
+    email:<br></br>
+    <input type="text" name="email" id="email" placeholder="email"/><span id="email-error" class="hidden btn-danger"></span>
+    <br></br>
+   <!--   Mobile:<br></br>
+    <input type="text" name="mobile" placeholder="name"/>
+    <br></br>
+     Password:<br></br>
+    <input type="text" name="password" placeholder="name"/> -->
+    <br></br>
+   <!--  <button type="submit" style="width: 200px" id="submit" value="Submit"/> -->
+    <button type="submit">Submit</button>
+    
+    <div class="alert alert-success" id="info">
+  </div>
+    
+   <!--  <td colspan="2"><div id="info" class="success"></div></td> -->
+  </fieldset>
+</form>
+
+ <!-- <span th:utext="${successMessage}">${successMessage}</span>  -->
+<!-- Result Container  -->
+<div id="resultContainer" style="display: none;">
+ <hr/>
+ <h4 style="color: green;">JSON Response From Server</h4>
+  <pre style="color: green;">
+    <code></code>
+   </pre>
+</div>
+    </body>  
+    
+ 
+</html>  

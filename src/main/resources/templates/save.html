@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+<meta charset="ISO-8859-1"/>
+  
+<title>Insert title here</title>
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+ <script type="text/javascript">
+ 
+//Delete
+ $(document).on("click","a",function() {
+		
+		var customerId = $(this).parent().find('input').val();
+		console.log(customerId);
+		
+		
+		var workingObject = $(this);
+		console.log("workingObject",workingObject);
+		
+		$.ajax({
+			type : "DELETE",
+			url :  "/delete/"+customerId,
+			success: function(resultMsg){
+				
+				$("#getResultDiv").html(customerId + " is deleted successfully!" ); 
+				workingObject.closest("tr").remove();
+				alert("deleted");
+				// re-css for table
+				$( "#customerTable tbody tr:odd" ).addClass("info");
+				$( "#customerTable tbody tr:even" ).addClass("success");
+			},
+			error : function(e) {
+				alert("ERROR: ", e);
+				console.log("ERROR: ", e);
+			}
+		});
+	});
+ 
+ $(document).ready(function() {
+	
+	 // GET REQUEST
+		$("#getAllCustomerId").click(function(event){
+		//var data =eval('$posts');
+			
+			event.preventDefault();
+			$.ajax({
+				type : "POST",
+				//url : "${pageContext.request.contextPath}/save"
+				url : "save",
+				cache:false,
+				success: function(result){
+					
+						if(result.validated){
+							$('#getResultDiv ul').empty();
+							var custList = "";
+							 var json1 = $.parseJSON(JSON.stringify(result));
+							 console.log(json1.data);
+			            
+							 //pagination
+							 var table = $('#customerTable').DataTable( {
+								"aaData": json1.data, 
+								"aoColumns": [
+								{"mData":"id"},
+								{ "mData": "name"},
+								{ "mData": "email"},
+								
+								 
+								],
+								"paging":true,
+								"pageLength":20,
+						          "ordering":true,
+						          /* "order":[0,"asc"] */
+						           "order":[0,"desc"] 
+								});
+							 
+							$.each(json1.data, function(i, userData){
+							//	console.log(i);
+								var user = '<tr>'+ '<td>' +" Customer with Id =  " + userData.id + '</td>'+ '<td>' + " ,  name = " + userData.name + '</td>'+ '<td>' + ", email = " + userData.email+ '</td>'+ 
+								'<td>'+'<input type="hidden" value="' + userData.id + '"/>'+
+								'<a href="#">' +
+		          				'<span class="glyphicon glyphicon-remove"></span>' +
+			        			'</a>' + '</td>' + "<br></br>+'</tr>'";
+								 $('#getResultDiv .list-group').append(user);
+								 
+								     
+								 
+					        });
+						}else{
+							$("#getResultDiv").html("<strong>Error123</strong>");
+							console.log("Fail: ", result);
+						}
+					},
+					error : function(e) {
+						$("#getResultDiv").html("<strong>Error</strong>");
+						console.log("ERROR: ", e);
+					}
+				});	
+	         });
+		});
+</script> 
+
+</head>
+
+<body>
+  <!-- ${pageContext.request.save} -->
+  <!-- <a href="${pageContext.request.contextPath}/about">About</a> -->
+
+<h1>Employees Table</h1>
+<div style="width:80%">
+
+<div class="container">
+<div class="menu navigation">
+ <!--  <img src="./download.jpg"  style="width:104px;height:142px;"/>
+  <img  src="./main/resources/static/images/download.jpg" width="400" height="400" /> 
+  <img src="./Images/images.jpg" height="50" width="50"/> -->
+  
+   <img src="../static/images/download.jpg" height="800px" width="1890" th:src="@{images/download.jpg}"/> 
+  
+<!-- <a href="${pageContext.request.contextPath}/">GET DETAILS</a> -->
+
+<table id="customerTable" class="display" style="width:50%">
+ <!-- Header Table -->
+       <thead>
+            <tr>
+                <th>Id</th>
+				<th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        
+    
+          <tbody>
+      <!--   <p th:each="post : ${posts}">
+		<h4>ID:</h4>
+		<div th:text="${post.id}"></div>
+		<h4>Title:</h4>
+		<div th:text="${post.name}"></div>
+		<h4>Content:</h4>
+		<div th:text="${post.email}"></div>
+	</p>  -->
+   </tbody>
+        
+    </table>
+</div>
+	 
+    <div class="col-sm-7" style="margin:20px 0px 20px 0px">
+		<button id="getAllCustomerId" type="button" class="btn btn-primary">Get All Customers</button>
+		<div id="getResultDiv" style="padding:20px 10px 20px 50px">
+	        <ul class="list-group">
+	        
+	    	</ul>
+    	</div>
+	</div>
+</div>
+</div>
+<!-- sdfgsdg -->
+</body>
+</html>

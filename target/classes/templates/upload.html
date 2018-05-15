@@ -1,0 +1,191 @@
+<html xmlns:th="http://www.thymeleaf.org">
+ <head>
+    
+
+<title>Upload File</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+function showPreview(objFileInput) {
+    if (objFileInput.files[0]) {
+        var fileReader = new FileReader();
+        fileReader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+			$("#image-holder").html('<img src="'+e.target.result+'" width="200px" height="200px" class="upload-preview" />');
+			$("#image-holder").css('opacity','1.0');
+			$(".icon-choose-image").css('opacity','0.5');
+        }
+	  fileReader.readAsDataURL(objFileInput.files[0]);
+    }
+  }
+</script>
+
+
+
+<script type="text/javascript">
+
+var img_urll="http://localhost/NewProject";
+
+function getImage(){
+	
+	     $.ajax({
+			type: "POST",
+		    url:"getUploadedImage",
+		    enctype: 'multipart/form-data',
+		    processData: false,
+		    contentType: false,
+		    cache: false,
+		    
+	        success: function (response) { 
+		    	 var json1 = $.parseJSON(JSON.stringify(response));
+				 console.log(json1.upImagelist.length);
+		    	
+		    	 console.log("sdfgsdfgh");
+		    	 $.each(json1.upImagelist, function(i, userData){
+						console.log(userData);
+					var img='<div><img src="'+img_urll+'/'+userData.file_name+'"/></div>'+" , username ="+userData.username;
+						var user = " Customer with Id = " + userData.id + " ,  name = " + userData.file + ", email = " + userData.username + "<br></br>";
+							$('#getResultDiv1 .list-group').append(img);
+							console.log($("#getResultDiv1 .list-group").length);
+			        });
+		    	 
+		    	 
+		    	/*   if(response.validated){
+		    		alert(response);
+		    		$.each(json1.upImagelist, function(i, userData){
+							console.log(userData);
+						var img='<div><img src="'+img_urll+'/'+userData.file_name+'"/></div>'
+							var user = " Customer with Id = " + userData.id + " ,  name = " + userData.file_name + ", email = " + userData.username + "<br></br>";
+								$('#getResultDiv1 .list-group').append(img)
+				        });
+		    		
+		    		
+		    	} */
+		     },
+		    error: function () {
+		    	
+		      }
+		    
+	});
+ } 
+
+
+ $(document).ready(function(){
+	
+	$("#submit").click(function(e){
+		 e.preventDefault();
+		 uploadfile();
+	 });
+	
+	$("#getAllCustomerId").click(function(event){
+		event.preventDefault();
+		getImage();
+}); 
+   
+  }); 
+	   
+ //======
+	 
+
+ 
+ //===========
+	var isJpg = function(name) {
+	    return name.match(/jpg$/i)
+	};
+	    
+	var isPng = function(name) {
+	    return name.match(/png$/i)
+	};
+	
+	 //=======
+
+function uploadfile(){
+	var username=$('#username').val();
+	console.log("username==>",username);
+	var imgContainer = $('#imgContainer');
+	
+	var image=$('#file_name').val();
+	console.log(image);
+	
+	  var form = $('#file_name_form')[0];
+      var data = new FormData(form);
+	    console.log(data);
+	    
+	    var filename = $.trim(data);
+	    /* if (!(isJpg(filename) || isPng(filename))) {
+            alert('Please browse a JPG/PNG file to upload ...');
+            return;
+        } */
+        
+	   $.ajax({
+		
+		    type: "POST",
+		    url:"upload",
+		    data:data,
+		    enctype: 'multipart/form-data',
+		    processData: false,
+		    contentType: false,
+		    cache: false,
+		    //datatype: "json",
+		    success: function (response) { 
+		    	if(response.validated){
+		    		alert(response);
+		    	}
+		    	//$("#submit").text(data);
+	           // console.log("SUCCESS : ", data);
+	           // $("#submit").prop("disabled", false);
+		     },
+		    error: function () {
+		    	/*  $("#result").text(responseText);
+		            console.log("ERROR : ");
+		            $("#btnSubmit").prop("disabled", false);
+ */
+		      }
+	});
+	
+}
+</script>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data" id="file_name_form" name="file_name">
+     <input type="text" id="username" name="username"/><br/><br/>
+                    <div class="controls">
+                        <div class="entry input-group col-xs-3">
+                            <input class="btn btn-primary" id="file_name" name="file" type="file" onChange="showPreview(this);"></input>
+                            <span class="input-group-btn">
+                                <button class="btn btn-success btn-add" id="submit" type="button">Submit
+                                     <span class="glyphicon glyphicon-plus"></span> 
+                                </button>
+                            </span>
+                        </div>
+                        
+                        <div id="image-holder"></div>
+                         <!-- <img src="http://localhost/NewProject/Image/20180425021315.jpg" width="600" height="400" border="0" usemap="#chart"/> -->
+                       <!--   <img src="../static/images/download.jpg" height="800px" width="1890" th:src="@{images/download.jpg}"/> --> 
+                    </div>
+                </form>
+
+    
+    <div class="col-sm-7" style="margin:20px 0px 20px 0px">
+		<button id="getAllCustomerId" type="button" class="btn btn-primary">Get All Customers</button>
+	
+	<div class="container">
+	    <div class="row">
+	       <div class="col-md-4">
+	          <div class="thumbnail">
+	             <div class="caption">
+		<div id="getResultDiv1" style="padding:20px 10px 20px 50px">
+	        <ul class="list-group">
+	    	</ul>
+    	</div>
+	</div>
+</div>
+</div>
+</div>
+   
+   </div>
+</div>
+</body>
+</html>
+

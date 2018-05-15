@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+  
+  
+  <script type="text/javascript">
+$(function() {
+   /*  Submit form using Ajax */
+   $('button[type=submit]').click(function(e) {
+   
+      //Prevent default submission of form
+      e.preventDefault();
+      
+      var vname = $("#cat_name").val();
+      
+      
+      //Remove all errors
+      $('input').next().remove();
+      
+      $.post({
+         url : '/saveemp',
+         data : $('form[name=category]').serialize(),
+       // data:{cat_name:vname},
+         success : function(res) {
+        	 console.log("res==>"+res.cat_m)
+            if(res.validated){
+           
+           
+               $('#info').html(res).fadeIn('slow');
+               $('#info').html("User has been added to the list successfully.");
+               $('#info').delay(5000).fadeOut('slow');
+               
+                   //window.location.href = 'http://localhost:8080/save';
+                 //window.location.href ="${pageContext.request.contextPath}/save";
+            }else{
+              //Set error messages
+               $.each(res.errorMessages,function(key,value){
+  	            $('input[name='+key+']').after('<span class="error">'+value+'</span>');
+              }); 
+            }
+         }
+      })
+   });
+});
+</script>
+  
+  
+</head>
+
+ <body>
+ <form action="saveemp" method="POST" name="category">
+     Category:<br></br>
+    <input type="text" name="cat_name" id="cat_name" placeholder="category"/> <span id="category-error" class="hidden btn-danger"></span> 
+    <br></br>
+    <button type="submit">Submit</button>
+    
+     <div class="alert alert-success" id="info">
+  </div>
+</form>
+ </body>
+
+</html>
