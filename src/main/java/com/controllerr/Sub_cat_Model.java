@@ -20,10 +20,12 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="sub_category")
+
 public class Sub_cat_Model {
 
 	@Id
@@ -36,6 +38,7 @@ public class Sub_cat_Model {
 	@Column(name="sub_cat_name")
 	private String sub_cat_name;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="cat_id")
 	private Category_Model cat_id;
@@ -81,5 +84,7 @@ public class Sub_cat_Model {
 		return "Sub_cat_Model [sub_cat_id=" + id + ", sub_cat_name=" + sub_cat_name + ", cat_id=" + cat_id
 				+ "]";
 	}
+
+	
 	
  }

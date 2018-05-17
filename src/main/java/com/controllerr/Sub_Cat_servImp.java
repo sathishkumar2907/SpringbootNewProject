@@ -1,5 +1,6 @@
 package com.controllerr;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +26,7 @@ public class Sub_Cat_servImp implements Sub_Cat_Servic{
 	}*/
 	
 	public void save_sub_category(Sub_cat_Model sub_cat_Model) {
+		
 		sub_Cat_Repo.save(sub_cat_Model);
 	}
 
@@ -36,7 +38,5 @@ public class Sub_Cat_servImp implements Sub_Cat_Servic{
 	/*public Sub_cat_Model findById(Category_Model cat_id) {
 		return (Sub_cat_Model) sub_Cat_Repo.findById(cat_id);
 	}*/
-
-
 
 }

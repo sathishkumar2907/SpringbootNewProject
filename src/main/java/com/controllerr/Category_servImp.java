@@ -24,9 +24,9 @@ public class Category_servImp implements Category_servic{
 		
 		 catRepos.save(category);
 		//catRepos.save(category);
-		category_model=new ArrayList<>();
+		/*category_model=new ArrayList<>();
 		category_model.add(catRepos.save(category));
-		System.out.println("category_model====> "+category_model);
+		System.out.println("category_model====> "+category_model);*/
 	 }
 
 

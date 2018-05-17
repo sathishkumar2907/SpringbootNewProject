@@ -141,6 +141,7 @@ public class UserControl {
 	        	user.setName(user.getName());
 	        	user.setEmail(user.getEmail());
 	            userserv.save(user);
+	            
 	       
 	        	Map<String, String> map=new HashMap<>();
 	            map.put("success", "User has been registered successfully");
@@ -148,7 +149,7 @@ public class UserControl {
 	            respone.setValidated(true);
 	            respone.setErrorMessages(map);
 	            respone.setUser(user);
-	            //respone.setData(user);
+	            
 	            
 	           // modelAndView.addObject("successMessage", " ");
 	            System.out.println("userid==>"+user.getId().toString());

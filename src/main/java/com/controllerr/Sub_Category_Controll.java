@@ -1,5 +1,6 @@
 package com.controllerr;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,22 +103,37 @@ public class Sub_Category_Controll {
 		   // Category_Model ca_i=cat_ser_con_repo.findOne(2L);
 		   /* Sub_cat_Model ss=sub_cat_ser_con_repo.findOne(s.getSub_cat_id());
 		    respone.setRes_sub_cat(ss);*/
+		    
 	    
 	    	List<Category_Model> user_list=(List<Category_Model>) cat_ser_con_repo.findAll();
 	    	System.out.println("user_list-->"+user_list);
 	    	
-	    
-	    	
 	    	 List<Sub_cat_Model> user_list1=(List<Sub_cat_Model>) sub_cat_ser_con_repo.findAll();
 		     System.out.println("user_list_sub_cat-->"+user_list1);
+		     
+		     List list=new ArrayList();
 	    
-	    	respone.setValidated(true);
+	    	for(Category_Model cc:user_list){
+                     for(Sub_cat_Model cc123:user_list1){
+		    		if(cc.getCat_id()==cc123.getSub_cat_id()){
+		    			list.add(cc123);
+		    			list.add(cc);
+		    			System.out.println(cc123.getSub_cat_name()+" ===> "+cc123.getCat_id().getCat_name());
+		    			respone.setCat_sub_m(list);
+		    			
+		    		}
+		    	}
+	    	}
+	    	
+	        respone.setValidated(true);
 	    	//model.addAttribute("posts",user_list);
-	    	respone.setCat_m(user_list);
-	    	respone.setCat_sub_m(user_list1);
+	    	//respone.setCat_m(user_list);
+	    	//respone.setCat_sub_m(user_list1);
 	    
 			return respone;
 		}
+	
+
 	
 /*	   @RequestMapping(value="/savesub1/sub", method=RequestMethod.POST)
 	   @ResponseBody
@@ -125,11 +142,38 @@ public class Sub_Category_Controll {
 		
 		 Category_Model user_list12= (Category_Model) sub_cat_ser_con_repo.findById(cat);
 	     System.out.println("suuuuuu-->"+user_list12);
-		 
-	     respone.setRes_cat(cat);
-		
+		 respone.setRes_cat(cat);
 		return respone;
 	}*/
+	
+	
+	@RequestMapping(value="/getCatByID/{cat_id}", method=RequestMethod.POST)
+	   @ResponseBody
+		public Response getAllCategoriesById(@PathVariable("cat_id") long cat_id){
+		Response respone=new Response();
+		List<Sub_cat_Model> cat=(List<Sub_cat_Model>) sub_cat_ser_con_repo.findById(cat_id);
+		System.out.println("cat==>"+cat);
+		respone.setCat_sub_m(cat);
+		
+		return respone;
+	}
+	
+	
+    @RequestMapping(value="/categoriesInSub", method=RequestMethod.POST)
+    @ResponseBody
+	public Response getAllCategories123(){
+	      
+	    Response respone=new Response();
+	    List<Category_Model> user_list=(List<Category_Model>)cat_ser_con_repo.myFindCustomerIds();
+    	System.out.println("user_list-->"+user_list);
+    	
+        respone.setValidated(true);
+    	respone.setCat_m(user_list);
+    	
+    
+		return respone;
+	}
+	
 }
 
 

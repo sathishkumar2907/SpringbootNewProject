@@ -7,7 +7,10 @@ import java.util.Map;
 public class Response {
 	   private User user;
 	   private List<User> data;
-	   private boolean validated;
+	   
+	
+
+	private boolean validated;
 	   private Map<String, String> errorMessages;
 	   private List<Category_Model> cat_m;
 	   private List<Sub_cat_Model> cat_sub_m;
@@ -136,6 +139,8 @@ public class Response {
 				+ errorMessages + ", cat_m=" + cat_m + ", cat_sub_m=" + cat_sub_m + ", res_cat=" + res_cat
 				+ ", res_sub_cat=" + res_sub_cat + ", upImagelist=" + upImagelist + ", uplImg=" + uplImg + "]";
 	}
+
+
 
 
 	

@@ -20,10 +20,14 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
 
 @Entity
 @Table(name = "category")
+
 public class Category_Model {
 
 	@Id
@@ -35,6 +39,8 @@ public class Category_Model {
 	@Column(name="cat_name")
 	private String cat_name;
 	
+	//@JsonIgnore
+	@JsonManagedReference
 	@OneToMany(cascade =  CascadeType.ALL, mappedBy = "cat_id",fetch = FetchType.LAZY)
 	private List<Sub_cat_Model> subcatModels=new ArrayList<>();
 	
