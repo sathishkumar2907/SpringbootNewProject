@@ -5,23 +5,21 @@ import java.util.List;
 import java.util.Map;
 
 public class Response {
+	 
 	   private User user;
-	   private List<User> data;
-	   
-	
-
-	private boolean validated;
+	   private List<User> data=new ArrayList<>();
+	   private boolean validated;
 	   private Map<String, String> errorMessages;
 	   private List<Category_Model> cat_m;
 	   private List<Sub_cat_Model> cat_sub_m;
-	   
 	   private Category_Model res_cat;
 	   private Sub_cat_Model res_sub_cat;
-	   
 	   private List<UploadImageModel> upImagelist;
 	   private UploadImageModel uplImg;
-	  
 	   private String ss=new String();
+	   private String string1=new String();
+	   private List<ProductModel> productRes;
+	   
 	   
 	   public String getSs() {
 		return ss;
@@ -31,10 +29,18 @@ public class Response {
 		this.ss = ss;
 	}
 
-	public String string1;
+	
 		public String getString1() {
 		return string1;
 	}
+
+	public List<ProductModel> getProductRes() {
+			return productRes;
+		}
+
+		public void setProductRes(List<ProductModel> productRes) {
+			this.productRes = productRes;
+		}
 
 	public void setString1(String string1) {
 		this.string1 = string1;
@@ -68,8 +74,6 @@ public class Response {
 		this.res_sub_cat = res_sub_cat;
 	}
 
-	
-
 	public Category_Model getRes_cat() {
 		return res_cat;
 	}
@@ -102,8 +106,6 @@ public class Response {
 		super();
 	}
 	
-	
-
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -124,7 +126,6 @@ public class Response {
 		this.errorMessages = errorMessages;
 	}
 	
-
 	public List<User> getData() {
 		return data;
 	}

@@ -187,8 +187,7 @@ public class UserControl {
 		  System.out.println("current user in edit==>"+currentUser);
 		
 		  if (currentUser == null) {
-			  
-	            logger.error("Unable to update. User with id {} not found.", id);
+			    logger.error("Unable to update. User with id {} not found.", id);
 	            respone.setString1("Unable to upate. User with id " + id + " not found without ResponseEntity");
 	            System.out.println("inside if");
 	           

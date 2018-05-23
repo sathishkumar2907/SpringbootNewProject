@@ -20,9 +20,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
 
 @Entity
@@ -39,30 +41,13 @@ public class Category_Model {
 	@Column(name="cat_name")
 	private String cat_name;
 	
-	//@JsonIgnore
 	@JsonManagedReference
-	@OneToMany(cascade =  CascadeType.ALL, mappedBy = "cat_id",fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cat_id",fetch = FetchType.EAGER)
 	private List<Sub_cat_Model> subcatModels=new ArrayList<>();
 	
+	public Category_Model(){}
 	
-	
-	/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "category_model")
-	//@JoinTable(name = "sub_category", joinColumns = @JoinColumn(name = "cat_id"), inverseJoinColumns = @JoinColumn(name = "sub_cat_id"))
-	private Set<Category_Model> Sub_cat_Model;*/
-	
-	/*@OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-	private List<Category_Model> resources;*/
-	
-	
-	
-	/*public List<Category_Model> getResources() {
-		return resources;
-	}
 
-	public void setResources(List<Category_Model> resources) {
-		this.resources = resources;
-	}*/
-	
 	public List<Sub_cat_Model> getSubcatModels() {
 		return subcatModels;
 	}
@@ -71,7 +56,7 @@ public class Category_Model {
 		this.subcatModels = subcatModels;
 	}
 
-	public Category_Model(){}
+	
 	
 	public Category_Model(Long cat_id,String cat_name){
 		this.cat_id=cat_id;
@@ -99,13 +84,6 @@ public class Category_Model {
 	}
 
 
-	/*public List<Sub_cat_Model> getSub_cat_Models() {
-		return subcatModels;
-	}
-
-	public void setSub_cat_Models(List<Sub_cat_Model> sub_cat_Models) {
-		this.subcatModels = sub_cat_Models;
-	}*/
 
 	@Override
 	public String toString() {

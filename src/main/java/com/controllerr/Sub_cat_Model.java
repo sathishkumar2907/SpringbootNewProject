@@ -1,6 +1,7 @@
 package com.controllerr;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +9,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +23,10 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="sub_category")
@@ -42,10 +47,27 @@ public class Sub_cat_Model {
 	@ManyToOne
 	@JoinColumn(name="cat_id")
 	private Category_Model cat_id;
-	  
 	
+	
+	@JsonManagedReference
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "sub_cat_id",fetch = FetchType.EAGER)
+	private List<ProductModel> productModels=new ArrayList<>();
+	
+	
+	
+	public Sub_cat_Model(){}
+	
+
 	public Long getId() {
 		return id;
+	}
+
+	public List<ProductModel> getProductModels() {
+		return productModels;
+	}
+
+	public void setProductModels(List<ProductModel> productModels) {
+		this.productModels = productModels;
 	}
 
 	public void setId(Long id) {
@@ -59,9 +81,7 @@ public class Sub_cat_Model {
 	public void setCat_id(Category_Model cat_id) {
 		this.cat_id = cat_id;
 	}
-
-	public Sub_cat_Model(){}
-	 
+ 
 	public Long getSub_cat_id() {
 		return id;
 	}
@@ -78,13 +98,10 @@ public class Sub_cat_Model {
 		this.sub_cat_name = sub_cat_name;
 	}
 
-
-	 @Override
+    @Override
 	public String toString() {
 		return "Sub_cat_Model [sub_cat_id=" + id + ", sub_cat_name=" + sub_cat_name + ", cat_id=" + cat_id
 				+ "]";
 	}
 
-	
-	
  }

@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class Sub_Cat_servImp implements Sub_Cat_Servic{
 
-	@Autowired
-	public Category_Repo category_Repo;
+	/*@Autowired
+	public Category_Repo category_Repo;*/
 	
 	@Autowired
 	public Sub_Cat_Repo sub_Cat_Repo;
@@ -26,7 +26,8 @@ public class Sub_Cat_servImp implements Sub_Cat_Servic{
 	}*/
 	
 	public void save_sub_category(Sub_cat_Model sub_cat_Model) {
-		
+		//sub_cat_Model.setCat_id(sub_cat_Model.getCat_id());
+		//System.out.println("sub_cat_Model===>"+sub_cat_Model);	
 		sub_Cat_Repo.save(sub_cat_Model);
 	}
 

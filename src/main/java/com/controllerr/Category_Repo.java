@@ -11,8 +11,13 @@ public interface Category_Repo extends CrudRepository<Category_Model, Long>{
   
 //	public Category_Model findCategory(String Cat_name);
 	//Category_Model findBycategory(Iterable<Category_Model> iterable);
-	public Category_Model findOne(Long id);
-
+	
+	
+	public Category_Model findOne(@Param("id") Long id);
+	
+	/*@Query(value = "select * from category WHERE category.cat_id=:cat_id", nativeQuery = true)
+	 public List<Category_Model> findById(@Param("cat_id") Long cat_id);*/
+	
 //	public Response subcatModels(String name);
 	
 	/*@Query(value = "SELECT * FROM sub_category INNER JOIN category ON sub_category.cat_id=category.cat_id WHERE sub_category.cat_id=:cat_id", nativeQuery = true)

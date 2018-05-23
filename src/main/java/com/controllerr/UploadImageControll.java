@@ -104,7 +104,7 @@ public class UploadImageControll {
 	                        Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)
 	                    );
 	                 result.setErrorMessages(errors);
-		           	}*/
+		           	}*/  
 	    try {
 	    	
 	    	long size = inputFile.getSize();
@@ -143,7 +143,7 @@ public class UploadImageControll {
 	        inputFile.transferTo(destinationFile);
 	       
 	       //fileInfo.setFileSize(inputFile.getSize());
-	        fileInfo.setFile_name("/Image/"+destinationFile.getName());
+	         fileInfo.setFile_name("/Image/"+destinationFile.getName());
 	         System.out.println("username====>"+fileInfo.getUsername());
 	        
 	        uploadimageserv.save_uploadimage(fileInfo);
@@ -174,7 +174,7 @@ public class UploadImageControll {
 		response.setUpImagelist(list_images);
 		
 		//========
-	/*for(UploadImageModel upImg : list_images){
+	     /*for(UploadImageModel upImg : list_images){
         	response.setUplImg(upImg);
 		}*/
 		//========

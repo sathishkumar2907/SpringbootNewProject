@@ -16,20 +16,20 @@
 			url : "savesub1",
 			cache:false,
 			success: function(result){
-				console.log(result);
+				//console.log(result);
 				
 					if(result.validated){
 						$('#getResultDiv ul').empty();
 						
 						 var json1 = $.parseJSON(JSON.stringify(result));
-						 console.log(json1.cat_sub_m);
-						 console.log(json1.cat_m);
+						 //console.log(json1.cat_sub_m);
+						 //console.log(json1.cat_m);
 		            
 						 
 						$.each(json1.cat_sub_m, function(i, userData){
-						//	console.log(i);
-							var user = " Customer with Id = " + userData.sub_cat_id + "  ,   sub category =    " + userData.sub_cat_name + "  ,   categoty =  " + userData.cat_id.cat_name + "<br></br>";
-							$('#getResultDiv1 .list-group').append(user)
+							console.log(i);
+							 var user = " Customer with Id = " + userData.sub_cat_id + "  ,   sub category =    " + userData.sub_cat_name + "  ,   categoty =  " + userData.cat_id.cat_name + "<br></br>";
+							$('#getResultDiv1 .list-group').append(user) 
 				        });
 					}else{
 						$("#getResultDiv1").html("<strong>Error123</strong>");
@@ -98,6 +98,7 @@
      e.preventDefault();
       
        var sub_cat_name = $("#sub_cat_name").val();
+       console.log(sub_cat_name);
        var cat_id = $("#cat_name").val();
 	   console.log(cat_id);
 		
@@ -114,7 +115,7 @@
               }, 
               
             success : function(res) {
-        	 console.log(res)
+        	 console.log(" addd cat",res)
             if(res.validated){
            
            
@@ -138,7 +139,7 @@
 
   <script type="text/javascript">
   //-----------get the subcategories based on categories----------
-  /* function sub_cat_data(cat_id){
+  function sub_cat_data(cat_id){
 	
 	  $.ajax({
 			type : "POST",
@@ -153,14 +154,14 @@
 				if(result.validated){
 						
 						 var json1 = $.parseJSON(JSON.stringify(result));
-						 console.log(json1.cat_sub_m);
+						// console.log(json1.cat_sub_m);
 
 						 var select = $('#sub_cat_name');
 				         select.find('option').remove();
 				         $("#sub_cat_name").append($("<option>Select </option>"));
 				         
 						 $.each(json1.cat_sub_m, function(i, userData){
-							console.log("data ",userData.cat_id.cat_id);
+						//	console.log("data ",userData.cat_id.cat_id);
 					    	
 					    	if(userData.cat_id.cat_id==cat_id){
 					    		$("#sub_cat_name").append($("<option></option>").val(userData.sub_cat_id).html(userData.sub_cat_name)); 
@@ -177,11 +178,11 @@
 					console.log("ERROR: ", e);
 				}
 			});
-	      }   */
+	      }  
   //------------------------------------------------------------------------- 
   
   function cat_data(){
-	  alert("sdfsgs");
+	 
 	  /* var cat_id = $("cat_name").val();
 		console.log(cat_id); */
 	  
@@ -196,7 +197,7 @@
 				if(result.validated){
 						
 						 var json1 = $.parseJSON(JSON.stringify(result));
-						 console.log(json1.cat_m);
+						 //console.log(json1.cat_m);
 		            
 						 $.each(json1.cat_m, function(i, userData){
 					    	$("#cat_name ").append($("<option></option>").val(userData.cat_id).html(userData.cat_name)); 
@@ -223,10 +224,10 @@
 			event.preventDefault();
 			
 			var cat_id=$(this).val(); 
-			console.log(cat_id)
+			//console.log(cat_id)
 			
 			 //----------getting sub categories based on categories-----
-		      sub_cat_data(cat_id);
+		     // sub_cat_data(cat_id);
 			 //------------------------------------------
 			
 			
