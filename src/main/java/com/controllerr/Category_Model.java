@@ -43,7 +43,10 @@ public class Category_Model {
 	
 	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cat_id",fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("cat_id")
 	private List<Sub_cat_Model> subcatModels=new ArrayList<>();
+	
+	
 	
 	public Category_Model(){}
 	
@@ -68,6 +71,7 @@ public class Category_Model {
 	public Long getCat_id() {
 		return cat_id;
 	}
+
 
 	public void setCat_id(Long cat_id) {
 		this.cat_id = cat_id;

@@ -144,8 +144,8 @@ public class Sub_Category_Controll {
 		   // Category_Model ca_i=cat_ser_con_repo.findOne(2L);
 		   /* Sub_cat_Model ss=sub_cat_ser_con_repo.findOne(s.getSub_cat_id());
 		    respone.setRes_sub_cat(ss);*/
-		    
-	    
+		 
+	 
 	    	List<Category_Model> user_list=(List<Category_Model>) cat_ser_con_repo.findAll();
 	    	System.out.println("user_list-->"+user_list);
 	    	
@@ -163,7 +163,7 @@ public class Sub_Category_Controll {
 		    		     }
 		    	      }
 	    	      }*/
-	    	
+		    
 	        respone.setValidated(true);
 	    	//model.addAttribute("posts",user_list);
 	    	respone.setCat_m(user_list);
@@ -192,7 +192,7 @@ public class Sub_Category_Controll {
 	    Response respone=new Response();
 	    List<Category_Model> user_list=(List<Category_Model>)cat_ser_con_repo.myFindCustomerIds();
     	System.out.println("user_list-->"+user_list);
-    	
+	   
         respone.setValidated(true);
     	respone.setCat_m(user_list);
     	

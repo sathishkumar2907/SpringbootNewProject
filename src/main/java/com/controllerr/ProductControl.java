@@ -1,5 +1,7 @@
 package com.controllerr;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -8,6 +10,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -95,12 +99,32 @@ public class ProductControl {
 			public Response getAllProducts(){
 			Response respone=new Response();
 			
+		  /*Sub_cat_Model subCatModel=new Sub_cat_Model();
+			subCatModel.setId(3L);
+			subCatModel.setSub_cat_name("sgsd");
+			
+			ProductModel productModel=new ProductModel();
+			productModel.setProductid(18L);
+			productModel.setProductname("asdfasf");
+			productModel.setProducttype("adfdf");
+			subCatModel.setProductModels(productModel);
+			
+			List<ProductModel> rolelist = new ArrayList<>();
+			
+			List<Sub_cat_Model> userlist = new ArrayList<>();
+			userlist.add(subCatModel);
+			//productModel.setUserlist(userlist);
+			rolelist.add(productModel);
+			
+			for (ProductModel r: rolelist) {
+				for (Sub_cat_Model u: r.getUserlist())
+					u.setProductModels(null);
+			}*/
+			
 			List<ProductModel> subCat=(List<ProductModel>) productRepo.findAll();
 			System.out.println("cat==>"+subCat);
 			respone.setProductRes(subCat);
 			
 			return respone;
 		}
-	
-
-}
+	 }

@@ -24,13 +24,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+/*@JsonIdentityInfo(
+		generator=ObjectIdGenerators.IntSequenceGenerator.class, property="sub_category")*/
 @Entity
 @Table(name="sub_category")
-
 public class Sub_cat_Model {
 
 	@Id
@@ -46,10 +49,13 @@ public class Sub_cat_Model {
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="cat_id")
+	//@JoinTable(name="category",inverseJoinColumns={@JoinColumn(name ="cat_id")})
 	private Category_Model cat_id;
-	
+		
 	
 	@JsonManagedReference
+	/*@JsonIdentityInfo(
+			generator=ObjectIdGenerators.IntSequenceGenerator.class, property="productModels")*/
 	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "sub_cat_id",fetch = FetchType.EAGER)
 	private List<ProductModel> productModels=new ArrayList<>();
 	
@@ -57,7 +63,6 @@ public class Sub_cat_Model {
 	
 	public Sub_cat_Model(){}
 	
-
 	public Long getId() {
 		return id;
 	}

@@ -23,8 +23,13 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+/*@JsonIdentityInfo(
+		generator=ObjectIdGenerators.IntSequenceGenerator.class, property="product")*/
 @Entity
 @Table(name = "product")
 public class ProductModel {
@@ -42,6 +47,9 @@ public class ProductModel {
 	@Column(name="producttype")
 	private String producttype;
 	
+	
+	/*@JsonIdentityInfo(
+			generator=ObjectIdGenerators.IntSequenceGenerator.class, property="sub_cat_id")*///If u want to get product items list along with subcategory list use this
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="sub_cat_id")
@@ -52,7 +60,7 @@ public class ProductModel {
 	}
 	
 	
-
+	
 	public Sub_cat_Model getSub_cat_id() {
 		return sub_cat_id;
 	}
@@ -90,6 +98,6 @@ public class ProductModel {
 	@Override
 	public String toString() {
 		return "ProductModel [id=" + productid + ", productname=" + productname + ", productType=" + producttype
-				+ ", sub_cat_id=" +/* sub_cat_id*/productid + "]";
+				+ ", sub_cat_id=" + sub_cat_id + "]";
 	}
 }

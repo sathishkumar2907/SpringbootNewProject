@@ -81,10 +81,10 @@ public class Category_Control {
 	            respone.setRes_cat(category_model);
 	            respone.setValidated(true);
 	            respone.setErrorMessages(map);
-	           // respone.setCat_m(category_model);
+	            //respone.setCat_m(category_model);
 	            //respone.setUser(category_model);
 	            //System.out.println("userid==>"+category_model.getCat_id().toString());
-		 }
+		    }
 		 
 		 return respone;  
 	}
